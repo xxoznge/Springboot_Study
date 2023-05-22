@@ -45,7 +45,12 @@ public class ProductController {
     public String delete(@PathVariable Long id) {
         productService.delete(id);
         return "삭제되었습니다.";
+    }
 
+    @PatchMapping("api/products/{id}")
+    public String patchUpdate(@PathVariable Long id,@RequestBody com.example.springboot.Products.Product product) {
+        productService.patchUpdate(id, product);
+        return "일부 수정되었습니다.";
     }
 
 
