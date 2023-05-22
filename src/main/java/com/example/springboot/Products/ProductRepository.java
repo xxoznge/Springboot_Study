@@ -1,7 +1,8 @@
 package com.example.springboot.Products;
 
-import org.springframework.stereotype.Repository;
 import com.example.springboot.dto.Product;
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +34,6 @@ public class ProductRepository {
                 .findAny()
                 .orElseThrow();
     }
-    // 상품 저장 메소드
-    public void save(Product product) {
-        products.add(product);
-    }
+
 
 }

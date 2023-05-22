@@ -35,4 +35,17 @@ public class ProductController {
         return "정상 저장됐습니다.";
     }
 
+    @PutMapping ("api/products/{id}")
+    public String update(@PathVariable Long id,@RequestBody com.example.springboot.Products.Product product) {
+        productService.save(product);
+        return "수정되었습니다.";
+    }
+
+    @DeleteMapping("api/products/{id}")
+    public String delete(@PathVariable Long id) {
+        productService.delete(id);
+        return "삭제되었습니다.";
+    }
+
+
 }

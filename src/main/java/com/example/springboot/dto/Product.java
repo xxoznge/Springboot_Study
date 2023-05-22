@@ -15,4 +15,5 @@ public class Product {
     public Long getPrice() {
         return price;
     }
+
 }

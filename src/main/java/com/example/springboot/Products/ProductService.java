@@ -1,12 +1,15 @@
 package com.example.springboot.Products;
+
 import com.example.springboot.dto.Product;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductJpaRepository productJpaRepository;
+
     public ProductService(ProductRepository productRepository, ProductJpaRepository productJpaRepository) {
 
         this.productRepository = productRepository;
@@ -31,5 +34,21 @@ public class ProductService {
 
     public void save(com.example.springboot.Products.Product product) {
         productJpaRepository.save(product);
+    }
+
+
+    public com.example.springboot.Products.Product update(Long id, com.example.springboot.Products.Product product) {
+        com.example.springboot.Products.Product product1 = productJpaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
+
+        product1.setName(product.getName());
+        product1.setPrice(product.getPrice());
+
+        return productJpaRepository.save(product);
+
+
+    }
+    public void delete(Long id) {
+        productJpaRepository.deleteById(id);
     }
 }
