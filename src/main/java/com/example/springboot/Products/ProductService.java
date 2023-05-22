@@ -43,10 +43,7 @@ public class ProductService {
 
         product1.setName(product.getName());
         product1.setPrice(product.getPrice());
-
-        return productJpaRepository.save(product);
-
-
+        return productJpaRepository.save(product1);
     }
     public void delete(Long id) {
         productJpaRepository.deleteById(id);
