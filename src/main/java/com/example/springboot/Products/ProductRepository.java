@@ -33,5 +33,9 @@ public class ProductRepository {
                 .findAny()
                 .orElseThrow();
     }
+    // 상품 저장 메소드
+    public void save(Product product) {
+        products.add(product);
+    }
 
 }
