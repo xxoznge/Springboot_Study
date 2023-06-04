@@ -1,4 +1,4 @@
-package com.example.springboot.Products;
+package com.example.springboot.entity;
 
 import lombok.Getter;
 import lombok.Setter;
