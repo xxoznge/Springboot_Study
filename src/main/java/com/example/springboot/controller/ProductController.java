@@ -1,7 +1,12 @@
 package com.example.springboot.controller;
 
+import com.example.springboot.Response.DefaultRes;
+import com.example.springboot.Response.ResponseMessage;
+import com.example.springboot.Response.StatusCode;
 import com.example.springboot.dto.Product;
 import com.example.springboot.service.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +22,8 @@ public class ProductController {
 
     // 상품 조회
     @GetMapping("api/product")
-    public List<com.example.springboot.entity.Product> findAll() { return productService.findAll(); }
+    public List<com.example.springboot.entity.Product> findAll() {
+        return productService.findAll(); }
 
     //id로 상품 조회
     @GetMapping(value = "api/product", params = "id")
@@ -27,21 +33,26 @@ public class ProductController {
 
     // name 으로 상품 조회
     @GetMapping(value = "api/products", params = "name")
-    public Product findOneByName(@RequestParam String name) {
+    public List<Product> findOneByName(@RequestParam String name) {
         return productService.findOneByName(name);
     }
+
     // 상품 등록
     @PostMapping("api/product")
-    public String saveProduct(@RequestBody com.example.springboot.entity.Product product) {
+    public ResponseEntity saveProduct(@RequestBody com.example.springboot.entity.Product product) {
+        if (product.getName().equals("") && product.getName().equals("")){
+            return new ResponseEntity(DefaultRes.res(StatusCode.BAD_REQUEST, ResponseMessage.PRODUCT_FAIL, product), HttpStatus.BAD_REQUEST);
+        }
         productService.save(product);
-        return "정상 저장됐습니다.";
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.PRODUCT_POST, product), HttpStatus.OK);
     }
+
 
     // 상품 삭제
     @DeleteMapping("api/product/{id}")
-    public String delete(@PathVariable Long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         productService.delete(id);
-        return "삭제되었습니다.";
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.PRODUCT_POST, id), HttpStatus.OK);
     }
 
     // 상품 수정

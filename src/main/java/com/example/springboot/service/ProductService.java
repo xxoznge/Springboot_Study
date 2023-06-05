@@ -26,7 +26,7 @@ public class ProductService {
     }
 
     // name 으로 상품 조회
-    public Product findOneByName(String name) {
+    public List<Product> findOneByName(String name) {
         return productJpaRepository.findOneByName(name);
     }
 
