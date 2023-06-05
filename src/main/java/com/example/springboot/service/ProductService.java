@@ -1,40 +1,46 @@
 package com.example.springboot.service;
 
-import com.example.springboot.repository.ProductJpaRepository;
-import com.example.springboot.repository.ProductRepository;
 import com.example.springboot.dto.Product;
+import com.example.springboot.repository.ProductJpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ProductService {
-    private final ProductRepository productRepository;
     private final ProductJpaRepository productJpaRepository;
 
-    public ProductService(ProductRepository productRepository, ProductJpaRepository productJpaRepository) {
+    public ProductService(ProductJpaRepository productJpaRepository) {
 
-        this.productRepository = productRepository;
         this.productJpaRepository = productJpaRepository;
     }
 
+    // 전체 상품 조회
     public List<com.example.springboot.entity.Product> findAll() {
         return productJpaRepository.findAll();
     }
-    public Product findOneById(int id) {
-        return productRepository.findOneById(id);
+
+    // id로 상품 조회
+    public Product findOneById(Long id) {
+        return productJpaRepository.findOneById(id);
     }
 
+    // name 으로 상품 조회
     public Product findOneByName(String name) {
-        return productRepository.findOneByName(name);
+        return productJpaRepository.findOneByName(name);
     }
 
+    // 상품 등록 POST
     public void save(com.example.springboot.entity.Product product) {
         productJpaRepository.save(product);
     }
 
+    // 상품 삭제 DELETE
+    public void delete(Long id) {
+        productJpaRepository.deleteById(id);
+    }
 
+    // 상품 업데이트 PUT
     public com.example.springboot.entity.Product update(Long id, com.example.springboot.entity.Product product) {
         com.example.springboot.entity.Product product1 = productJpaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
@@ -42,9 +48,8 @@ public class ProductService {
         product1.setPrice(product.getPrice());
         return productJpaRepository.save(product1);
     }
-    public void delete(Long id) {
-        productJpaRepository.deleteById(id);
-    }
+
+    // 상품 업데이트 PATCH
     public com.example.springboot.entity.Product patchUpdate(Long id, com.example.springboot.entity.Product product) {
         com.example.springboot.entity.Product product2 = productJpaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
